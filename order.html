@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="style/style.css" />
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <link rel="apple-touch-icon" href="icon.png">
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <form id="orderForm" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-offset-4 col-md-12">
+                    <h1> Create your order </h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-offset-4 col-md-2">
+                    <label for="email">Your e-mail:</label>
+                    <input type="email" class="form-control" id="email" name="email" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-offset-4 col-md-2">
+                    <label for="material">Material:</label>
+                    <select class="form-control" id="material" name="material">
+                        <option>PLA</option>
+                        <option>ABS</option>
+                        <option>PET</option>
+                        <option>Polycarbonate</option>
+                        <option>Nylon</option>
+                        <option>HIPS</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" class="form-control" id="quantity" name="quantity" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-offset-4 col-md-2">
+                    <label for="card_brand">Card brand:</label>
+                    <select class="form-control" id="card_brand" name="card_brand">
+                        <option>Visa</option>
+                        <option>MasterCard</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-offset-4 col-md-2">
+                    <label for="card_number">Number:</label>
+                    <input type="text" class="form-control" id="card_number" name="card_number" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-offset-4 col-md-2">
+                    <label for="expiration">Expiration(mm/yy):</label>
+                    <input type="month" class="form-control" id="expiration" name="expiration" />
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="sec_code">Security code:</label>
+                    <input type="text" class="form-control" id="sec_code" name="sec_code" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-offset-4 col-md-2">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" />
+                </div>
+                <div class="form-group  col-md-2">
+                    <label for="surname">Surname:</label>
+                    <input type="text" class="form-control" id="surname" name="surname" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-offset-4 col-md-2">
+                    <label class="btn btn-info btn-lg">
+                    Upload model <input type="file" id="files" name="files" hidden>
+                </label>
+                </div>
+            </div
+
+            <div class="row">
+                <div class="form-group col-md-offset-4 col-md-2">
+                    <button type="submit" class="btn btn-info btn-lg">Send order</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</body>
+
+</html>
+
+<script>
+    $(function () {
+
+        $("#orderForm").submit(function (e) {
+            e.preventDefault();
+
+            var order = {
+                ContactEmail: this.elements["email"].value,
+                Material: this.elements["material"].value,
+                Quantity: this.elements["quantity"].value,
+                PaymentCard: {
+                    Brand: this.elements["card_brand"].value,
+                    Number: this.elements["card_number"].value,
+                    ExpirationDate: this.elements["expiration"].value,
+                    SecurityCode: this.elements["sec_code"].value,
+                    FirstName: this.elements["name"].value,
+                    LastName: this.elements["surname"].value
+                }
+            }
+
+            var fileUpload = $("#files").get(0);
+            var files = fileUpload.files;
+            CreateOrder(order, files);
+        });
+
+        function CreateOrder(rawOrder, files) {
+            var uploadSuccess = false;
+            var data = new FormData();
+            data.append(files[0].name, files[0])
+            $.ajax({
+                async: true,
+                crossDomain: true,
+                url: "http://localhost:13266/api/order/uploadFile",
+                method: "POST",
+                processData: false,
+                contentType: false,
+                data: data,
+                success: function (fileId) {
+                    rawOrder.attachedFileId = fileId;
+                    $.ajax({
+                        async: true,
+                        crossDomain: true,
+                        url: "http://localhost:13266/api/order",
+                        method: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify(rawOrder),
+                        success: function (data, textStatus, jqXHR) {
+                            alert("Ordes was sent successfully!")
+                            window.location.assign("http://3dforgers/")
+                        },
+                        error:
+                        function (jqXHR, textStatus, errorThrown) {
+                            alert(textStatus)
+                        }
+                    })
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("uploadError")
+                },
+
+            })
+        }
+    })
+
+</script>

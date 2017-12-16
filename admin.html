@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="style/style.css" />
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <link rel="apple-touch-icon" href="icon.png">
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="userInfo" style="display:none;">
+            <div class="row">
+                <div class="col-md-offset-8 col-md-4">
+                    <p>Вы вошли как: <span class="userName"></span></p>
+                    <input type="button" class='btn btn-primary btn-xs' value="Выйти" id="logOut" />
+                </div>
+            </div>
+        </div>
+        <div class="loginForm">
+            <form id="loginForm" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-offset-4 col-md-12">
+                        <h1> Login </h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-offset-4 col-md-2">
+                        <label for="email">E-mail:</label>
+                        <input type="email" class="form-control" id="email" name="email" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-offset-4 col-md-2">
+                        <label for="pwd">Password:</label>
+                        <input type="password" class="form-control" id="pwd" name="pwd" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-offset-4 col-md-2">
+                        <button type="submit" class="btn btn-info btn-lg">Login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="ordersPanel centrify" style="display:none;">
+            <div class="row centrify">
+                <form id="orderForm" class="form-inline">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Owner e-mail" id="ownerEmail" />
+                    </div>
+
+                    <div class="radio">
+                        <label><input type="radio" name="option" value='new' checked >New orders</label>
+                    </div>
+
+                    <div class="radio">
+                        <label><input type="radio" name="option" value='closed' />Closed orders</label>
+                    </div>
+
+                    <div class="radio">
+                        <label><input type="radio" name="option" value='rejected' />Rejected orders</label>
+                    </div>
+
+                    <div class="radio">
+                        <label><input type="radio" name="option" value='inprogress'/>In progress</label>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-info btn-sm">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="ordersTable">
+
+                    <table id="searchResult" class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>E-mail</th>
+                                <th>Quantity</th>
+                                <th>Material</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="centrify">
+                    <ul id="pagesList" class="pagination pagination">
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="orderPanel col-md-offset-4" style="display:none;">
+            <div class="row">
+                <div class='form-group col-md-2'>
+                    <label id="orderOwner"></label>
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class='form-group col-md-2'>
+                    <label id="dateTime"></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class='form-group col-md-2'>
+                    <label id="quantity"></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class='form-group col-md-3'>
+                    <button id="downloadButton" type="button" class="btn btn-primary btn-xs">Download file</button>
+                </div>
+                <div class='form-group col-md-3'>
+                    <label for="totalPrice">Total price:</label>
+                    <input type="text" class="form-control" id="totalPrice">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class='form-group col-md-6'>
+                    <label for="orderInfo">Additional info:</label>
+                    <textarea class="form-control" rows="5" id="orderInfo"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class='form-group col-md-3'>
+                    <label for="contactName">ContactName:</label>
+                    <input type="text" class="form-control" id="contactName">
+                </div>
+                <div class='form-group col-md-3'>
+                    <label for="phone">Phone:</label>
+                    <input type="text" class="form-control" id="phone">
+                </div>
+            </div>
+            <div class="row">
+                <div class='form-group col-md-3'>
+                    <label for="country">Country:</label>
+                    <input type="text" class="form-control" id="country">
+                </div>
+                <div class='form-group col-md-3'>
+                    <label for="region">Region:</label>
+                    <input type="text" class="form-control" id="region">
+                </div>
+            </div>
+            <div class="row">
+                <div class='form-group col-md-3'>
+                    <label for="city">City:</label>
+                    <input type="text" class="form-control" id="city">
+                </div>
+                <div class='form-group col-md-3'>
+                    <label for="zip">Zip:</label>
+                    <input type="text" class="form-control" id="zip">
+                </div>
+            </div>
+            <div class="row">
+                <div class='form-group col-md-6'>
+                    <label for="street">Street:</label>
+                    <input type="text" class="form-control" id="street">
+                </div>
+            </div>
+            <div class="row">
+                <div class='form-group col-md-1'>
+                    <button id="closeButton" type="button" class="btn btn-primary btn-xs">Close</button>
+                </div>
+                <div class='form-group col-md-1'>
+                    <button id="rejectButton" type="button" class="btn btn-primary btn-xs">Reject</button>
+                </div>
+                <div class='form-group col-md-1'>
+                    <button id="applyButton" type="button" class="btn btn-primary btn-xs">Apply</button>
+                </div>
+                <div class='form-group col-md-1'>
+                    <button id="updateButton" type="button" class="btn btn-primary btn-xs">Update</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class='form-group col-md-1'>
+                    <button id="backToListButton" type="button" class="btn btn-primary btn-xs">Back to list</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</body>
+
+
+<script>
+    var tokenKey = "accessToken";
+    var currentOrder;
+
+    var email = "";
+    var isClosed = false;
+    var isValid = null;
+
+
+
+    $(function () {
+        $("#loginForm").submit(function (e) {
+            e.preventDefault();
+            var loginData = new FormData();
+            loginData.append("username", $("#email").val());
+            loginData.append("password", $("#pwd").val());
+            $.ajax({
+                async: true,
+                crossDomain: true,
+                processData: false,
+                contentType: false,
+                url: "http://localhost:13266/api/account/token",
+                method: "POST",
+                data: loginData,
+                mimeType: "multipart/form-data"
+            }).done(function (data) {
+                data = JSON.parse(data);
+                $('.userInfo').css('display', 'block')
+                $('.userName').text(data.username);
+                $('.accountsPanel').css('display', 'none');
+                $('.ordersPanel').css('display', 'block');
+                $('.loginForm').css('display', 'none');
+                sessionStorage.setItem(tokenKey, data.access_token);
+                loadOrders(1);
+            }).fail(function (data) {
+                console.log(data);
+            });
+        });
+
+        $('#logOut').click(function (e) {
+            e.preventDefault();
+            sessionStorage.removeItem(tokenKey);
+            $(".userInfo").css('display', 'none')
+            $('.userName').text("");
+            $('.accountsPanel').css('display', 'none');
+            $('.ordersPanel').css('display', 'none');
+            $('.loginForm').css('display', 'block');
+            $('.orderPanel').css("display", "none");
+        });
+
+        $("#orderForm").submit(function (e) {
+            e.preventDefault();
+            email = $('#ownerEmail').val()
+            var radioValue = $("input[name='option']:checked").val();
+            switch (radioValue) {
+                case 'new':
+                    isClosed = false;
+                    isValid = null;
+                    break;
+                case 'closed':
+                    isClosed = true;
+                    isValid = true;
+                    break;
+                case 'inprogress':
+                    isClosed = false;
+                    isValid = true;
+                    break;
+                case 'rejected':
+                    isClosed = false;
+                    isValid = false;
+                    break;
+                default:
+                    break;
+            }
+            loadOrders(1);
+        });
+
+        function createTable(data) {
+            var currentPage = data.currentPage;
+            var pages = data.totalPages;
+            var orderList = data.orders;
+            var body = $('#searchResult').children('tbody').first().html("");
+            $.each(orderList, function (index, value) {
+                var tableRow = $("<tr></tr>");
+                var d = new Date(value.Date);
+                var strD = d.getMonth() + "/" + d.getDate() + '/' + d.getFullYear() + '-' + d.getHours() + ':' + d.getMinutes();
+                tableRow.append("<td>" + strD + "</td>");
+                tableRow.append("<td>" + value.ContactEmail + "</td>");
+                tableRow.append("<td>" + value.Quantity + "</td>");
+                tableRow.append("<td>" + value.Material + "</td>");
+                tableRow.click(getOrderHandler(value.Id))
+                body.append(tableRow);
+            });
+            var paginator = $('#pagesList').html("");
+            for (var i = 1; i <= pages; i++) {
+                var li = $('<li></li>');
+                li.append("<a href='#'>" + i + "</a>");
+                li.click(getPagingHandler(i));
+                if (i == currentPage) {
+                    li.addClass("active");
+                }
+                paginator.append(li);
+            }
+        }
+
+        function getPagingHandler(i) {
+            return function () { loadOrders(i); }
+        }
+
+        function getOrderHandler(id) {
+            return function () { getOrder(id); }
+        }
+
+        function updateOrder() {
+            var address = {};
+            currentOrder.id = currentOrder.id;
+            currentOrder.totalPrice = $('#totalPrice').val();
+            currentOrder.info = $('#orderInfo').val();
+            address.contactName = $('#contactName').val();
+            address.mobile = $('#phone').val();
+            address.country = $('#country').val();
+            address.region = $('#region').val();
+            address.city = $('#city').val();
+            address.postalCode = $('#zip').val();
+            address.streetAddress = $('#street').val();
+            currentOrder.shippingAddress = address;
+
+            $.ajax({
+                async: true,
+                crossDomain: true,
+                method: "PUT",
+                contentType: "application/json, charset=utf-8",
+                data: JSON.stringify(currentOrder),
+                url: "http://localhost:13266/api/order/",
+                beforeSend: function (xhr) {
+                    var token = sessionStorage.getItem(tokenKey);
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
+                success: function (data) {
+                    getOrder(currentOrder.id)
+
+
+                }
+            })
+
+        }
+
+        function rejectOrder() {
+            $.ajax({
+                async: true,
+                crossDomain: true,
+                method: "PUT",
+                processData: false,
+                contentType: false,
+                url: "http://localhost:13266/api/order/rejectorder/" + currentOrder.id,
+                beforeSend: function (xhr) {
+                    var token = sessionStorage.getItem(tokenKey);
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
+                success: function (data) {
+                    getOrder(currentOrder.id);
+                }
+            })
+        }
+
+        function closeOrder() {
+            $.ajax({
+                async: true,
+                crossDomain: true,
+                method: "PUT",
+                processData: false,
+                contentType: false,
+                url: "http://localhost:13266/api/order/closeorder/" + currentOrder.id,
+                beforeSend: function (xhr) {
+                    var token = sessionStorage.getItem(tokenKey);
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
+                success: function (data) {
+                    getOrder(currentOrder.id);
+                }
+            })
+        }
+
+        function approveOrder() {
+            $.ajax({
+                async: true,
+                crossDomain: true,
+                method: "PUT",
+                processData: false,
+                contentType: false,
+                url: "http://localhost:13266/api/order/approveorder/" + currentOrder.id,
+                beforeSend: function (xhr) {
+                    var token = sessionStorage.getItem(tokenKey);
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
+                success: function (data) {
+                    getOrder(currentOrder.id);
+                }
+            })
+        }
+
+        function getOrder(id) {
+            $.ajax({
+                async: true,
+                crossDomain: true,
+                method: "GET",
+                url: "http://localhost:13266/api/order/" + id,
+                beforeSend: function (xhr) {
+                    var token = sessionStorage.getItem(tokenKey);
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
+                success: function (data) {
+                    currentOrder = data;
+                    $('.orderPanel').css("display", "block");
+                    $('.ordersPanel').css("display", "none");
+                    $('#orderOwner').text(data.contactEmail);
+                    var d = new Date(data.date);
+                    var strD = d.getMonth() + "/" + d.getDate() + '/' + d.getFullYear() + '-' + d.getHours() + ':' + d.getMinutes();
+                    $('#dateTime').text(strD);
+                    $('#quantity').text(data.quantity);
+                    $('#totalPrice').val(data.totalPrice);
+                    $('#orderInfo').val(data.info);
+                    $('#contactName').val(data.shippingAddress.contactName);
+                    $('#phone').val(data.shippingAddress.mobile);
+                    $('#country').val(data.shippingAddress.country);
+                    $('#region').val(data.shippingAddress.region);
+                    $('#city').val(data.shippingAddress.city);
+                    $('#zip').val(data.shippingAddress.postalCode);
+                    $('#street').val(data.shippingAddress.streetAddress);
+                    if (data.isValid == null) {
+                        $('#closeButton').prop('disabled', true);
+                        $('#rejectButton').prop('disabled', false);
+                        $('#applyButton').prop('disabled', false);
+                    } else if (data.isValid == true) {
+                        $('#closeButton').prop('disabled', false);
+                        $('#rejectButton').prop('disabled', true);
+                        $('#applyButton').prop('disabled', true);
+
+                    } else {
+                        $('#closeButton').prop('disabled', true);
+                        $('#rejectButton').prop('disabled', true);
+                        $('#applyButton').prop('disabled', false);
+                    }
+                    if (data.isClosed == true) {
+                        $('#closeButton').prop('disabled', true);
+                        $('#rejectButton').prop('disabled', true);
+                        $('#applyButton').prop('disabled', true);
+                        $('#updateButton').prop('disabled', true);
+                    }
+
+
+                }
+            })
+        }
+
+        function downloadFile() {
+            var fileId = currentOrder.attachedFileId;
+            let xhr = new XMLHttpRequest();
+
+            xhr.open('GET', 'http://localhost:13266/api/order/downloadfile/' + fileId);
+            var token = sessionStorage.getItem(tokenKey);
+            xhr.setRequestHeader("Authorization", "Bearer " + token);
+            xhr.responseType = 'blob';
+            let formData = new FormData(this);
+            xhr.send(formData);
+
+            xhr.onload = function (e) {
+                if (this.status == 200) {
+                    var blob = new Blob([this.response], { type: 'application/octet-stream' });
+                    let a = document.createElement("a");
+                    a.style = "display: none";
+                    document.body.appendChild(a);
+                    let url = window.URL.createObjectURL(blob);
+                    a.href = url;
+                    a.download = 'file.txt';
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                } else {
+                }
+            };
+        }
+
+        function loadOrders(page) {
+            var pageSize = 15;
+
+            $.ajax({
+                async: true,
+                crossDomain: true,
+                method: "GET",
+                url: "http://localhost:13266/api/order/",
+                beforeSend: function (xhr) {
+                    var token = sessionStorage.getItem(tokenKey);
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
+                data: {
+                    email: email,
+                    page: page,
+                    pageSize: pageSize,
+                    isClosed: isClosed,
+                    isValid: isValid
+                },
+                success: function (data) {
+                    createTable(data);
+                }
+            })
+
+        }
+
+        function backTolist(){
+            $('.orderPanel').css("display", "none");
+            $('.ordersPanel').css("display", "block");
+        }
+
+        $('#downloadButton').on("click", downloadFile);
+        $('#closeButton').on("click", closeOrder);
+        $('#rejectButton').on("click", rejectOrder);
+        $('#applyButton').on("click", approveOrder);
+        $('#updateButton').on("click", updateOrder);
+        $('#backToListButton').on("click", backTolist);
+
+    })
+
+</script>

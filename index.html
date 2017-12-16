@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Welcome to 3D-Forgers</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="style/style.css" />
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <link rel="apple-touch-icon" href="icon.png">
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="jumbotron">
+            <h1> Welcome to 3D Forgers </h1>
+            <p style='color: black;'> 3D-Forgers is manufactory of 3D printing. We can print model for you, which has a complex structure. This model
+                can be simply detail or magnificent work of art. We offer you a lot of types of 3D-printing material
+            </p>
+
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <img src="img/materials.jpg" alt="materials" style="width:100%">
+                    <div class="caption">
+                        <p>We use wide set of materials for many cases - 
+                            decorative models, models for painting etc.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <img src="img/utensil.jpg" alt="work1" style="width:100%">
+                    <div class="caption">
+                        <p>You can get fine models for many purposes. 
+                            3Dforgers can realize all your wishes!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <img src="img/mechanism.jpg" alt="work2" style="width:100%">
+                    <div class="caption">
+                        <p>Our artists will help you to create difficult technical projects 
+                            with the help of high-precision equipment </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+                <div id="container" class='w3-content w3-display-container'>
+                    <img class="slide" src="img/gal1.jpg">
+                    <img class="slide" src="img/gal2.jpg">
+                    <img class="slide" src="img/gal3.jpg">
+                    <img class="slide" src="img/gal4.jpg">
+                    <img class="slide" src="img/gal5.jpg">
+                    <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                    <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-offset-5 col-md-2">
+                <a href="order" id="btn_order" class="btn btn-info btn-lg" role="button">Create order</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    var slideIndex = 1;
+    showDivs(slideIndex);
+
+    function plusDivs(n) {
+        showDivs(slideIndex += n);
+    }
+
+    function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("slide");
+        if (n > x.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = x.length };
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        x[slideIndex - 1].style.display = "block";
+    }
+
+</script>
